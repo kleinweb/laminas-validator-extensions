@@ -24,5 +24,11 @@ abstract class BaseValidator extends AbstractValidator
         return \count($this->getMessages()) === 0;
     }
 
+    /**
+     * Apply validation logic and add any validation errors.
+     *
+     * @param mixed $value
+     * @return void
+     */
     abstract protected function testValue($value): void;
 }
