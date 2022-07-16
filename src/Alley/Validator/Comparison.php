@@ -41,13 +41,6 @@ final class Comparison extends BaseValidator
         '>=' => 'notGreaterThanOrEqualTo',
     ];
 
-    /**
-     * @var mixed
-     */
-    protected $compared;
-
-    private string $operator = '===';
-
     protected $messageTemplates = [
         'notEqual' => 'Must be equal to %compared% but is %value%.',
         'notIdentical' => 'Must be identical to %compared% but is %value%.',
@@ -62,6 +55,13 @@ final class Comparison extends BaseValidator
     protected $messageVariables = [
         'compared' => 'compared',
     ];
+
+    /**
+     * @var mixed
+     */
+    protected $compared;
+
+    private string $operator = '===';
 
     protected function testValue($value): void
     {
