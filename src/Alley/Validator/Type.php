@@ -55,7 +55,7 @@ final class Type extends BaseValidator
 
     public function __construct($options = null)
     {
-        $this->typeValidator = OneOf::create(self::SUPPORTED_TYPES);
+        $this->typeValidator = new OneOf(['haystack' => self::SUPPORTED_TYPES]);
 
         parent::__construct($options);
     }

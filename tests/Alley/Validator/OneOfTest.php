@@ -13,23 +13,30 @@ declare(strict_types=1);
 
 namespace Alley\Validator;
 
+use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class OneOfTest extends TestCase
 {
     public function testValidInput()
     {
-        $validator = OneOf::create(['a', 'b', 'c']);
+        $validator = new OneOf(['haystack' => ['a', 'b', 'c']]);
         $this->assertTrue($validator->isValid('a'));
     }
 
     public function testInvalidInput()
     {
-        $validator = OneOf::create(['a', 'b', 'c']);
+        $validator = new OneOf(['haystack' => ['a', 'b', 'c']]);
         $this->assertFalse($validator->isValid('z'));
         $this->assertSame(
             ['notOneOf' => 'Must be one of [a, b, c] but is z.'],
             $validator->getMessages(),
         );
+    }
+
+    public function testInvalidHaystack()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new OneOf(['haystack' => [fn() => null]]);
     }
 }

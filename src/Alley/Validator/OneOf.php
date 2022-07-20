@@ -16,7 +16,6 @@ namespace Alley\Validator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Explode;
-use Laminas\Validator\InArray;
 use Laminas\Validator\ValidatorInterface;
 
 final class OneOf extends BaseValidator
@@ -32,7 +31,6 @@ final class OneOf extends BaseValidator
     ];
 
     protected $options = [
-        'origin' => null,
         'haystack' => [],
     ];
 
@@ -48,35 +46,21 @@ final class OneOf extends BaseValidator
         parent::__construct($options);
     }
 
-    public static function create(array $haystack): self
-    {
-        return new self(['origin' => new InArray([
-            'haystack' => $haystack,
-            'strict' => InArray::COMPARE_STRICT,
-        ])]);
-    }
-
     protected function testValue($value): void
     {
-        if (! $this->options['origin']) {
-            throw new InvalidArgumentException('No haystack given');
-        }
-
-        if (! $this->options['origin']->isValid($value)) {
+        if (! in_array($value, $this->options['haystack'], true)) {
             $this->error(self::NOT_ONE_OF);
         }
     }
 
-    protected function setOrigin(InArray $origin)
+    protected function setHaystack(array $haystack)
     {
-        $haystack = $origin->getHaystack();
         $valid = $this->haystackValidator->isValid($haystack);
 
         if (! $valid) {
             throw new InvalidArgumentException('Haystack must contain only scalar values.');
         }
 
-        $this->options['origin'] = $origin;
         $this->options['haystack'] = $haystack;
     }
 }

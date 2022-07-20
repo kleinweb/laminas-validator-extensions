@@ -71,7 +71,7 @@ final class Comparison extends BaseValidator
 
     public function __construct($options = null)
     {
-        $this->operatorValidator = OneOf::create(self::SUPPORTED_OPERATORS);
+        $this->operatorValidator = new OneOf(['haystack' => self::SUPPORTED_OPERATORS]);
 
         parent::__construct($options);
     }
