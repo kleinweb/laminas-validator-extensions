@@ -8,7 +8,7 @@ For more information about what validators do, how to use them, and how to write
 
 The abstract `Alley\Validator\BaseValidator` class standardizes the implementation of custom validators with `\Laminas\Validator\AbstractValidator`.
 
-When extending `BaseValidator`, validation logic goes into a new `testValue()` method, which is responsible only for applying the logic and adding any validation errors. It's no longer necessary to call `setValue()` prior to evaluating the input, and `isValid()` will return `true` if there are no failure messages after evaluating the input and `false` if there are any messages.
+When extending `BaseValidator`, validation logic goes into a new `testValue()` method, which is responsible only for applying the logic and adding any validation errors. It's no longer necessary to call `setValue()` prior to evaluating the input, and `isValid()` will return `true` if there are no error messages after evaluating the input and `false` if there are any messages.
 
 Before:
 
@@ -115,11 +115,11 @@ $valid->isValid(true); // true
 
 ### `OneOf`
 
-`Alley\Validator\OneOf` validates whether an array of scalar values of contains the input. The input passes validation if it is found within the array.
+`Alley\Validator\OneOf` validates whether an array of scalar values contains the input.
 
 `OneOf` is a simpler version of `\Laminas\Validator\InArray` that accepts only scalar values in the haystack and does only strict comparisons. In return, it produces a friendlier error message that lists the allowed values.
 
-`OneOf` contains a `::create()` named constructor for initializing a validator directly from the haystack.
+`OneOf` contains a `::create()` named constructor for initializing an instance directly from the haystack.
 
 #### Supported Options
 
