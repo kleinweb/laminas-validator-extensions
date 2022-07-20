@@ -17,7 +17,7 @@ use Laminas\Validator\AbstractValidator;
 
 abstract class BaseValidator extends AbstractValidator
 {
-    final public function isValid($value)
+    final public function isValid($value): bool
     {
         $this->setValue($value);
         $this->testValue($value);
