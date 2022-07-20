@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Alley\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\ValidatorInterface;
 
 final class Type extends BaseValidator
 {
@@ -38,15 +39,26 @@ final class Type extends BaseValidator
         'iterable',
     ];
 
-    protected string $type = 'null';
-
     protected $messageTemplates = [
         self::NOT_OF_TYPE => "Must be of PHP type '%type%' but %value% is not.",
     ];
 
     protected $messageVariables = [
-        'type' => 'type',
+        'type' => ['options' => 'type'],
     ];
+
+    protected $options = [
+        'type' => 'null',
+    ];
+
+    private ValidatorInterface $typeValidator;
+
+    public function __construct($options = null)
+    {
+        $this->typeValidator = OneOf::create(self::SUPPORTED_TYPES);
+
+        parent::__construct($options);
+    }
 
     protected function testValue($value): void
     {
@@ -101,10 +113,12 @@ final class Type extends BaseValidator
 
     protected function setType(string $type)
     {
-        if (! \in_array($type, self::SUPPORTED_TYPES, true)) {
-            throw new InvalidArgumentException('Not an allowed type.');
+        $valid = $this->typeValidator->isValid($type);
+
+        if (! $valid) {
+            throw new InvalidArgumentException($this->typeValidator->getMessages()[0]);
         }
 
-        $this->type = $type;
+        $this->options['type'] = $type;
     }
 }

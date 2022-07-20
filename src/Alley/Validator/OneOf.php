@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Alley\Validator;
 
+use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\Explode;
 use Laminas\Validator\InArray;
+use Laminas\Validator\ValidatorInterface;
 
 final class OneOf extends BaseValidator
 {
@@ -28,7 +31,22 @@ final class OneOf extends BaseValidator
         'haystack' => ['options' => 'haystack'],
     ];
 
-    private InArray $origin;
+    protected $options = [
+        'origin' => null,
+        'haystack' => [],
+    ];
+
+    private ValidatorInterface $haystackValidator;
+
+    public function __construct($options = null)
+    {
+        $this->haystackValidator = new Explode([
+            'validator' => new Callback('is_scalar'),
+            'breakOnFirstFailure' => true,
+        ]);
+
+        parent::__construct($options);
+    }
 
     public static function create(array $haystack): self
     {
@@ -40,30 +58,25 @@ final class OneOf extends BaseValidator
 
     protected function testValue($value): void
     {
-        if (! $this->origin->isValid($value)) {
+        if (! $this->options['origin']) {
+            throw new InvalidArgumentException('No haystack given');
+        }
+
+        if (! $this->options['origin']->isValid($value)) {
             $this->error(self::NOT_ONE_OF);
         }
     }
 
     protected function setOrigin(InArray $origin)
     {
-        foreach ($origin->getHaystack() as $value) {
-            if (! \is_scalar($value)) {
-                throw new InvalidArgumentException(
-                    'Haystack must contain only scalar values but contains ' . strtoupper(\gettype($value))
-                );
-            }
+        $haystack = $origin->getHaystack();
+        $valid = $this->haystackValidator->isValid($haystack);
+
+        if (! $valid) {
+            throw new InvalidArgumentException('Haystack must contain only scalar values.');
         }
 
-        $this->origin = $origin;
-    }
-
-    public function __get($name)
-    {
-        if ('options' === $name) {
-            return ['haystack' => $this->origin->getHaystack()];
-        }
-
-        return null;
+        $this->options['origin'] = $origin;
+        $this->options['haystack'] = $haystack;
     }
 }

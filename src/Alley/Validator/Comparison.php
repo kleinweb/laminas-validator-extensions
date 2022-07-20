@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Alley\Validator;
 
-use Laminas\Validator\Exception;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\ValidatorInterface;
 
 final class Comparison extends BaseValidator
@@ -30,6 +30,11 @@ final class Comparison extends BaseValidator
         '>=',
     ];
 
+    /**
+     * Error message codes for the given operators.
+     *
+     * @var string[]
+     */
     private const OPERATOR_ERRORS = [
         '==' => 'notEqual',
         '===' => 'notIdentical',
@@ -54,15 +59,13 @@ final class Comparison extends BaseValidator
     ];
 
     protected $messageVariables = [
-        'compared' => 'compared',
+        'compared' => ['options' => 'compared'],
     ];
 
-    /**
-     * @var mixed
-     */
-    protected $compared;
-
-    private string $operator = '===';
+    protected $options = [
+        'compared' => null,
+        'operator' => '===',
+    ];
 
     private ValidatorInterface $operatorValidator;
 
@@ -109,17 +112,12 @@ final class Comparison extends BaseValidator
         }
     }
 
-    protected function setCompared($compared)
-    {
-        $this->compared = $compared;
-    }
-
     protected function setOperator(string $operator)
     {
         $valid = $this->operatorValidator->isValid($operator);
 
         if (! $valid) {
-            throw new Exception\InvalidArgumentException($this->operatorValidator->getMessages()[0]);
+            throw new InvalidArgumentException($this->operatorValidator->getMessages()[0]);
         }
 
         $this->operator = $operator;
