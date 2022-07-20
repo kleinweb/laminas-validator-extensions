@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Alley\Validator;
 
 use Laminas\Validator\Exception;
+use Laminas\Validator\ValidatorInterface;
 
 final class Comparison extends BaseValidator
 {
@@ -63,6 +64,15 @@ final class Comparison extends BaseValidator
 
     private string $operator = '===';
 
+    private ValidatorInterface $operatorValidator;
+
+    public function __construct($options = null)
+    {
+        $this->operatorValidator = OneOf::create(self::SUPPORTED_OPERATORS);
+
+        parent::__construct($options);
+    }
+
     protected function testValue($value): void
     {
         switch ($this->operator) {
@@ -106,11 +116,10 @@ final class Comparison extends BaseValidator
 
     protected function setOperator(string $operator)
     {
-        $oneOf = OneOf::create(self::SUPPORTED_OPERATORS);
-        $valid = $oneOf->isValid($operator);
+        $valid = $this->operatorValidator->isValid($operator);
 
         if (! $valid) {
-            throw new Exception\InvalidArgumentException($oneOf->getMessages()[0]);
+            throw new Exception\InvalidArgumentException($this->operatorValidator->getMessages()[0]);
         }
 
         $this->operator = $operator;
