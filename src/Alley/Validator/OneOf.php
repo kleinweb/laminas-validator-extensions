@@ -48,7 +48,7 @@ final class OneOf extends BaseValidator
 
     protected function testValue($value): void
     {
-        if (! in_array($value, $this->options['haystack'], true)) {
+        if (! \in_array($value, $this->options['haystack'], true)) {
             $this->error(self::NOT_ONE_OF);
         }
     }

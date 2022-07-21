@@ -37,6 +37,6 @@ final class OneOfTest extends TestCase
     public function testInvalidHaystack()
     {
         $this->expectException(InvalidArgumentException::class);
-        new OneOf(['haystack' => [fn() => null]]);
+        new OneOf(['haystack' => [fn () => null]]);
     }
 }
