@@ -78,37 +78,37 @@ final class Comparison extends BaseValidator
 
     protected function testValue($value): void
     {
-        switch ($this->operator) {
+        switch ($this->options['operator']) {
             case '==':
-                $result = $value == $this->compared;
+                $result = $value == $this->options['compared'];
                 break;
             case '!=':
             case '<>':
-                $result = $value != $this->compared;
+                $result = $value != $this->options['compared'];
                 break;
             case '!==':
-                $result = $value !== $this->compared;
+                $result = $value !== $this->options['compared'];
                 break;
             case '<':
-                $result = $value < $this->compared;
+                $result = $value < $this->options['compared'];
                 break;
             case '>':
-                $result = $value > $this->compared;
+                $result = $value > $this->options['compared'];
                 break;
             case '<=':
-                $result = $value <= $this->compared;
+                $result = $value <= $this->options['compared'];
                 break;
             case '>=':
-                $result = $value >= $this->compared;
+                $result = $value >= $this->options['compared'];
                 break;
             case '===':
             default:
-                $result = $value === $this->compared;
+                $result = $value === $this->options['compared'];
                 break;
         }
 
         if (! $result) {
-            $this->error(self::OPERATOR_ERRORS[$this->operator]);
+            $this->error(self::OPERATOR_ERRORS[$this->options['operator']]);
         }
     }
 
@@ -120,6 +120,6 @@ final class Comparison extends BaseValidator
             throw new InvalidArgumentException($this->operatorValidator->getMessages()[0]);
         }
 
-        $this->operator = $operator;
+        $this->options['operator'] = $operator;
     }
 }

@@ -62,7 +62,7 @@ final class Type extends BaseValidator
 
     protected function testValue($value): void
     {
-        switch ($this->type) {
+        switch ($this->options['type']) {
             case 'array':
                 $result = \is_array($value);
                 break;
