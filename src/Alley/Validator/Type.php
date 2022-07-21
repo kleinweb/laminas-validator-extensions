@@ -24,19 +24,19 @@ final class Type extends BaseValidator
         'array',
         'bool',
         'boolean',
+        'callable',
         'double',
         'float',
         'int',
         'integer',
+        'iterable',
         'null',
         'numeric',
         'object',
         'real',
         'resource',
-        'string',
         'scalar',
-        'callable',
-        'iterable',
+        'string',
     ];
 
     protected $messageTemplates = [
@@ -51,11 +51,11 @@ final class Type extends BaseValidator
         'type' => 'null',
     ];
 
-    private ValidatorInterface $typeValidator;
+    private ValidatorInterface $typeOptionValidator;
 
     public function __construct($options = null)
     {
-        $this->typeValidator = new OneOf(['haystack' => self::SUPPORTED_TYPES]);
+        $this->typeOptionValidator = new OneOf(['haystack' => self::SUPPORTED_TYPES]);
 
         parent::__construct($options);
     }
@@ -113,10 +113,10 @@ final class Type extends BaseValidator
 
     protected function setType(string $type)
     {
-        $valid = $this->typeValidator->isValid($type);
+        $valid = $this->typeOptionValidator->isValid($type);
 
         if (! $valid) {
-            throw new InvalidArgumentException($this->typeValidator->getMessages()[0]);
+            throw new InvalidArgumentException($this->typeOptionValidator->getMessages()[0]);
         }
 
         $this->options['type'] = $type;

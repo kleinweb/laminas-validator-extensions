@@ -30,12 +30,7 @@ final class Comparison extends BaseValidator
         '>=',
     ];
 
-    /**
-     * Error message codes for the given operators.
-     *
-     * @var string[]
-     */
-    private const OPERATOR_ERRORS = [
+    private const OPERATOR_ERROR_CODES = [
         '==' => 'notEqual',
         '===' => 'notIdentical',
         '!=' => 'isEqual',
@@ -67,11 +62,11 @@ final class Comparison extends BaseValidator
         'operator' => '===',
     ];
 
-    private ValidatorInterface $operatorValidator;
+    private ValidatorInterface $operatorOptionValidator;
 
     public function __construct($options = null)
     {
-        $this->operatorValidator = new OneOf(['haystack' => self::SUPPORTED_OPERATORS]);
+        $this->operatorOptionValidator = new OneOf(['haystack' => self::SUPPORTED_OPERATORS]);
 
         parent::__construct($options);
     }
@@ -108,16 +103,16 @@ final class Comparison extends BaseValidator
         }
 
         if (! $result) {
-            $this->error(self::OPERATOR_ERRORS[$this->options['operator']]);
+            $this->error(self::OPERATOR_ERROR_CODES[$this->options['operator']]);
         }
     }
 
     protected function setOperator(string $operator)
     {
-        $valid = $this->operatorValidator->isValid($operator);
+        $valid = $this->operatorOptionValidator->isValid($operator);
 
         if (! $valid) {
-            throw new InvalidArgumentException($this->operatorValidator->getMessages()[0]);
+            throw new InvalidArgumentException($this->operatorOptionValidator->getMessages()[0]);
         }
 
         $this->options['operator'] = $operator;

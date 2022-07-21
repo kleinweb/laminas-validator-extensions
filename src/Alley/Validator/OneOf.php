@@ -34,11 +34,11 @@ final class OneOf extends BaseValidator
         'haystack' => [],
     ];
 
-    private ValidatorInterface $haystackValidator;
+    private ValidatorInterface $haystackOptionValidator;
 
     public function __construct($options = null)
     {
-        $this->haystackValidator = new Explode([
+        $this->haystackOptionValidator = new Explode([
             'validator' => new Callback('is_scalar'),
             'breakOnFirstFailure' => true,
         ]);
@@ -55,7 +55,7 @@ final class OneOf extends BaseValidator
 
     protected function setHaystack(array $haystack)
     {
-        $valid = $this->haystackValidator->isValid($haystack);
+        $valid = $this->haystackOptionValidator->isValid($haystack);
 
         if (! $valid) {
             throw new InvalidArgumentException('Haystack must contain only scalar values.');
