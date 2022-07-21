@@ -13,8 +13,6 @@ jobs:
         can_fail: [false]
 
     name: PHP ${{ matrix.php }}
-    env:
-      CACHEDIR: /tmp/test-cache
     steps:
       - name: Check out code
         uses: actions/checkout@v3
