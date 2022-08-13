@@ -20,29 +20,28 @@ final class AnyValidatorTest extends TestCase
 {
     public function testNoValidators()
     {
-        $validator = new AnyValidator();
+        $validator = new AnyValidator([]);
         $this->assertTrue($validator->isValid(42));
     }
 
     public function testValidValidator()
     {
-        $validator = new AnyValidator();
-        $validator->attach(new AlwaysValid());
+        $validator = new AnyValidator([new AlwaysValid()]);
         $this->assertTrue($validator->isValid(42));
     }
 
     public function testInvalidValidator()
     {
-        $validator = new AnyValidator();
-        $validator->attach(new GreaterThan(['min' => 43]));
+        $validator = new AnyValidator([new GreaterThan(['min' => 43])]);
         $this->assertFalse($validator->isValid(42));
     }
 
     public function testFirstValidValidator()
     {
-        $validator = new AnyValidator();
-        $validator->attach(new AlwaysValid());
-        $validator->attach(new GreaterThan(['min' => 43]));
+        $validator = new AnyValidator([
+            new AlwaysValid(),
+            new GreaterThan(['min' => 43]),
+        ]);
         $this->assertTrue($validator->isValid(42));
     }
 }

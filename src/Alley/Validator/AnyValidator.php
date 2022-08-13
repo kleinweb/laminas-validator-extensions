@@ -60,7 +60,7 @@ final class AnyValidator implements Countable, ValidatorInterface
         $this->messages = [];
 
         if ($this->count() === 0) {
-            // Consistent with \Laminas\Validator\ValidatorChain().
+            // Consistent with `\Laminas\Validator\ValidatorChain()`.
             return true;
         }
 
