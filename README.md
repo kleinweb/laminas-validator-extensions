@@ -59,6 +59,23 @@ class Float extends \Alley\Validator\BaseValidator
 }
 ```
 
+## "Any Validator" Chains
+
+`\Alley\Validator\AnyValidator` is like a [validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that it connects the validators with "OR," marking input as valid as soon it passes one of the given validators.
+
+### Basic usage
+
+```php
+<?php
+
+$valid = new \Alley\Validator\AnyValidator([new \Laminas\Validator\LessThan(['max' => 10])]);
+$valid->attach(new \Laminas\Validator\GreaterThan(['min' => 90]));
+
+$valid->isValid(9); // true
+$valid->isValid(99); // true
+$valid->isValid(42); // false
+```
+
 ## Validators
 
 ### `AlwaysValid`
@@ -111,6 +128,26 @@ $valid = new \Alley\Validator\Comparison(
     ]
 );
 $valid->isValid(true); // true
+```
+
+### `Not`
+
+`Alley\Validator\Not` inverts the validity of a given validator. It allows for creating validators that test whether input is, for example, "not one of" in addition to "one of."
+
+#### Supported options
+
+None.
+
+#### Basic usage
+
+```php
+<?php
+
+$origin = new \Alley\Validator\OneOf(['haystack' => ['foo', 'bar']]);
+$valid = new Alley\Validator\Not($origin, 'The input was invalid.');
+
+$valid->isValid('foo'); // false
+$valid->isValid('baz'); // true
 ```
 
 ### `OneOf`
