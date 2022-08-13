@@ -33,6 +33,16 @@ final class AnyValidator implements Countable, ValidatorInterface
     protected $messages = [];
 
     /**
+     * @param ValidatorInterface[] $validators
+     */
+    public function __construct(array $validators)
+    {
+        foreach ($validators as $validator) {
+            $this->attach($validator);
+        }
+    }
+
+    /**
      * Attach a validator to the end of the chain.
      *
      * @param ValidatorInterface $validator
