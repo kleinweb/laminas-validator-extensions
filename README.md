@@ -156,9 +156,7 @@ $valid->isValid('baz'); // true
 
 `OneOf` is a simpler version of `\Laminas\Validator\InArray` that accepts only scalar values in the haystack and does only strict comparisons. In return, it produces a friendlier error message that lists the allowed values.
 
-`OneOf` contains a `::create()` named constructor for initializing an instance directly from the haystack.
-
-#### Supported Options
+#### Supported options
 
 The following options are supported for `\Alley\Validator\OneOf`:
 
