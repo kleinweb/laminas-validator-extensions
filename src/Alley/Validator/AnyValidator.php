@@ -71,7 +71,7 @@ final class AnyValidator implements Countable, ValidatorInterface
         }
 
         foreach ($this->validators as $validator) {
-            $this->messages = array_replace($this->validators, $validator->getMessages());
+            $this->messages = array_replace($this->messages, $validator->getMessages());
         }
 
         return false;
