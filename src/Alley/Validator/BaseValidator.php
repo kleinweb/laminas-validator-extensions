@@ -20,7 +20,7 @@ abstract class BaseValidator extends AbstractValidator
     final public function isValid($value): bool
     {
         $this->setValue($value);
-        $this->testValue($value);
+        $this->testValue($this->value);
         return \count($this->getMessages()) === 0;
     }
 
