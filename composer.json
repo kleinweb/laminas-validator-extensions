@@ -19,7 +19,9 @@
       "Alley\\": "tests/Alley/"
     }
   },
-  "config": {},
+  "config": {
+    "lock": false
+  },
   "require": {
     "php": "^7.4 || ^8.0",
     "laminas/laminas-validator": "^2.20"
