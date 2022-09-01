@@ -2,9 +2,19 @@
 
 This package provides additional validation classes for [the Laminas Validator framework](https://docs.laminas.dev/laminas-validator/), plus a custom base validation class.
 
-For more information about what validators do, how to use them, and how to write your own, [visit the Laminas documentation](https://docs.laminas.dev/laminas-validator/). 
+## Installation
 
-## Base Validator
+Install the latest version with:
+
+```bash
+$ composer require alleyinteractive/laminas-validator-extensions
+```
+
+## Basic usage
+
+For more information about what validators do, how to use them, and how to write your own, [visit the Laminas documentation](https://docs.laminas.dev/laminas-validator/).
+
+## Base validator
 
 The abstract `Alley\Validator\BaseValidator` class standardizes the implementation of custom validators with `\Laminas\Validator\AbstractValidator`.
 
@@ -59,7 +69,7 @@ class Float extends \Alley\Validator\BaseValidator
 }
 ```
 
-## "Any Validator" Chains
+## "Any Validator" chains
 
 `\Alley\Validator\AnyValidator` is like a [validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that it connects the validators with "OR," marking input as valid as soon it passes one of the given validators.
 
@@ -195,3 +205,13 @@ $valid->isValid('date_create_immutable'); // true
 $valid = new \Alley\Validator\Type(['type' => 'bool']);
 $valid->isValid([]); // false
 ```
+
+## About
+
+### License
+
+[GPL-2.0-or-later](https://github.com/alleyinteractive/laminas-validator-extensions/blob/main/LICENSE)
+
+### Maintainers
+
+[Alley Interactive](https://github.com/alleyinteractive)
