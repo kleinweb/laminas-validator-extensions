@@ -19,10 +19,7 @@
       "Alley\\": "tests/Alley/"
     }
   },
-  "config": {
-    "optimize-autoloader": true,
-    "classmap-authoritative": true
-  },
+  "config": {},
   "require": {
     "php": "^7.4 || ^8.0",
     "laminas/laminas-validator": "^2.20"
