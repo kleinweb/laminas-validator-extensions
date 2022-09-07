@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="laminas-validator-extensions" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
-    <description>The coding standard for laminas-validator-extensions.</description>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="alleyinteractive/laminas-validator-extensions" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+    <description>The coding standard for alleyinteractive/laminas-validator-extensions.</description>
 
     <file>src/</file>
     <file>tests/</file>
