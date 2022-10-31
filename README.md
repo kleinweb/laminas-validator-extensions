@@ -71,7 +71,9 @@ class Float extends \Alley\Validator\BaseValidator
 
 ## "Any Validator" chains
 
-`\Alley\Validator\AnyValidator` is like a [validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that it connects the validators with "OR," marking input as valid as soon it passes one of the given validators.
+`\Alley\Validator\AnyValidator` is like a [Laminas validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that it connects the validators with "OR," marking input as valid as soon it passes one of the given validators.
+
+Unlike a Laminas validator chain, validators can only be attached, not prepended, and there is no `$priority` argument.
 
 ### Basic usage
 
@@ -84,6 +86,22 @@ $valid->attach(new \Laminas\Validator\GreaterThan(['min' => 90]));
 $valid->isValid(9); // true
 $valid->isValid(99); // true
 $valid->isValid(42); // false
+```
+
+## "Fast" validator chains
+
+`\Alley\Validator\FastValidatorChain` is like a [Laminas validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that if a validator fails, the chain will automatically be broken; there is no `$breakChainOnFailure` parameter.
+
+Unlike a Laminas validator chain, validators can only be attached, not prepended, and there is no `$priority` argument.
+
+### Basic usage
+
+```php
+$valid = new \Alley\Validator\FastValidatorChain([new \Laminas\Validator\LessThan(['max' => 10])]);
+$valid->attach(new \Laminas\Validator\GreaterThan(['min' => 90]));
+
+$valid->isValid(42); // false
+count($valid->getMessages()); // 1
 ```
 
 ## Validators

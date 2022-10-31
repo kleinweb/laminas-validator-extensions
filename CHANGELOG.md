@@ -4,7 +4,9 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ## Unreleased
 
-Nothing yet.
+### Added
+
+- `FastValidatorChain` validator.
 
 ## 1.1.0
 
