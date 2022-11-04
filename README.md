@@ -158,6 +158,31 @@ $valid = new \Alley\Validator\Comparison(
 $valid->isValid(true); // true
 ```
 
+### `DivisibleBy`
+
+`\Alley\Validator\DivisibleBy` allows you to validate whether the input is evenly divisible by a given numeric value. Inputs will automatically be cast to integers.
+
+#### Supported options
+
+The following options are supported for `\Alley\Validator\DivisibleBy`:
+
+- `divisor`: The value the inputs are divided by. It will automatically be cast to an integer.
+
+#### Basic usage
+
+```php
+<?php
+
+$valid = new \Alley\Validator\DivisibleBy(
+    [
+        'divisor' => 3,
+    ],
+);
+
+$valid->isValid(9); // true
+$valid->isValid(10); // false
+```
+
 ### `Not`
 
 `Alley\Validator\Not` inverts the validity of a given validator. It allows for creating validators that test whether input is, for example, "not one of" in addition to "one of."
