@@ -158,6 +158,31 @@ $valid = new \Alley\Validator\Comparison(
 $valid->isValid(true); // true
 ```
 
+### `ContainsString`
+
+`\Alley\Validator\ContainsString` is a validator around the `str_contains()` function. Each instance of the validator represents the "needle" string and validates whether the string is found within the input "haystack."  Inputs will automatically be cast to strings.
+
+#### Supported options
+
+The following options are supported for `\Alley\Validator\ContainsString`:
+
+- `needle`: The string or instance of `\Stringable` the inputs are searched for. It will automatically be cast to a string at the time of validation.
+
+#### Basic usage
+
+```php
+<?php
+
+$valid = new \Alley\Validator\ContainsString(
+    [
+        'needle' => 'foo',
+    ],
+);
+
+$valid->isValid('foobar'); // true
+$valid->isValid('barbaz'); // false
+```
+
 ### `DivisibleBy`
 
 `\Alley\Validator\DivisibleBy` allows you to validate whether the input is evenly divisible by a given numeric value. Inputs will automatically be cast to integers.

@@ -6,11 +6,11 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ### Added
 
-- `DivisibleBy`, `FastValidatorChain`, and `WithMessage` validators.
+- `ContainsString`, `DivisibleBy`, `FastValidatorChain`, and `WithMessage` validators.
 
 ### Fixed
 
-- `Not` returned error messages before first call to `::isValid()`.
+- `Not::getMessages()` returned failure messages before first call to `::isValid()`.
 
 ## 1.1.0
 
