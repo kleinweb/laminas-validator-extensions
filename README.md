@@ -249,6 +249,26 @@ $valid = new \Alley\Validator\Type(['type' => 'bool']);
 $valid->isValid([]); // false
 ```
 
+### `WithMessage`
+
+`Alley\Validator\WithMessage` allows you to decorate a validator with a custom failure code and message, replacing the validator's usual failure messages.
+
+#### Supported options
+
+None.
+
+#### Basic usage
+
+```php
+<?php
+
+$origin = new \Laminas\Validator\GreaterThan(42);
+$valid = new Alley\Validator\WithMessage('tooSmall', 'Please enter a number greater than 42.', $origin);
+
+$valid->isValid(41); // false
+$valid->getMessages(); // ['tooSmall' => 'Please enter a number greater than 42.']
+```
+
 ## About
 
 ### License
