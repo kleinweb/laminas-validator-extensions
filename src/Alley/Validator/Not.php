@@ -21,6 +21,8 @@ final class Not implements ValidatorInterface
 
     private string $message;
 
+    private bool $ran = false;
+
     public function __construct(ValidatorInterface $origin, string $message)
     {
         $this->origin = $origin;
@@ -29,6 +31,7 @@ final class Not implements ValidatorInterface
 
     public function isValid($value)
     {
+        $this->ran = true;
         return !$this->origin->isValid($value);
     }
 
@@ -36,7 +39,7 @@ final class Not implements ValidatorInterface
     {
         $messages = [];
 
-        if (\count($this->origin->getMessages()) === 0) {
+        if ($this->ran && \count($this->origin->getMessages()) === 0) {
             $messages[] = $this->message;
         }
 

@@ -8,6 +8,10 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 - `DivisibleBy` and `FastValidatorChain` validators.
 
+### Fixed
+
+- `Not` returned error messages before first call to `::isValid()`.
+
 ## 1.1.0
 
 ### Added
