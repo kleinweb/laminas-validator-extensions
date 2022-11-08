@@ -167,6 +167,7 @@ $valid->isValid(true); // true
 The following options are supported for `\Alley\Validator\ContainsString`:
 
 - `needle`: The string or instance of `\Stringable` the inputs are searched for. It will automatically be cast to a string at the time of validation.
+- `ignoreCase`: Whether to perform a case-insensitive search. False by default.
 
 #### Basic usage
 

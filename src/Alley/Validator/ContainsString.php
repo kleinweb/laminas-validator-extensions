@@ -31,6 +31,7 @@ final class ContainsString extends BaseValidator
 
     protected $options = [
         'needle' => '',
+        'ignoreCase' => false,
     ];
 
     private ValidatorInterface $validNeedles;
@@ -52,7 +53,15 @@ final class ContainsString extends BaseValidator
 
     protected function testValue($value): void
     {
-        if (! str_contains((string) $value, (string) $this->options['needle'])) {
+        $haystack = (string) $value;
+        $needle = (string) $this->options['needle'];
+
+        if ($this->options['ignoreCase']) {
+            $haystack = strtolower($haystack);
+            $needle = strtolower($needle);
+        }
+
+        if (! str_contains($haystack, $needle)) {
             $this->error(self::NOT_CONTAINS_STRING);
         }
     }
