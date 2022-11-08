@@ -130,8 +130,9 @@ $images = \Alley\WP\match_blocks(
 
 The supported operator names are:
 
-* `CONTAINS` and `NOT CONTAINS`, which forward to `\Alley\Validator\ContainsString`.
+* `CONTAINS` and `NOT CONTAINS`, which forward to `\Alley\Validator\ContainsString` using a case-sensitive search.
 * `IN` and `NOT IN`, which forward to `\Alley\Validator\OneOf`.
+* `LIKE` and `NOT LIKE`, which forward to `\Alley\Validator\ContainsString` using a case-insensitive search.
 * `REGEX` and `NOT REGEX`, which forward to `\Laminas\Validator\Regex`.
 * `===`, `!==`, and the other operators supported by `\Alley\Validator\Comparison`.
 

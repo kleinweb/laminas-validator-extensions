@@ -43,6 +43,7 @@ final class ValidatorByOperator implements ValidatorInterface
             case 'NOT CONTAINS':
                 $validator = new ContainsString([
                     'needle' => $param,
+                    'ignoreCase' => false,
                 ]);
                 break;
 
@@ -50,6 +51,14 @@ final class ValidatorByOperator implements ValidatorInterface
             case 'NOT IN':
                 $validator = new OneOf([
                     'haystack' => $param,
+                ]);
+                break;
+
+            case 'LIKE':
+            case 'NOT LIKE':
+                $validator = new ContainsString([
+                    'needle' => $param,
+                    'ignoreCase' => true,
                 ]);
                 break;
 
@@ -67,7 +76,7 @@ final class ValidatorByOperator implements ValidatorInterface
                 ]);
         }
 
-        if ($operator === 'NOT REGEX' || $operator === 'NOT IN' || $operator === 'NOT CONTAINS') {
+        if (str_starts_with($operator, 'NOT ')) {
             $validator = new Not($validator, 'Invalid comparison.');
         }
 

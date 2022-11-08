@@ -34,7 +34,9 @@ final class ValidatorByOperatorTest extends TestCase
             ['IN', ['foo', 'bar'], 'foo'],
             ['NOT IN', ['foo', 'bar'], 'baz'],
             ['CONTAINS', 'foo', 'foobar'],
-            ['NOT CONTAINS', 'foo', 'barbaz'],
+            ['NOT CONTAINS', 'foo', 'Foobar'],
+            ['LIKE', 'foo', 'Foobar'],
+            ['NOT LIKE', 'foo', 'barbaz'],
             ['===', 42, 42],
         ];
     }
@@ -57,6 +59,8 @@ final class ValidatorByOperatorTest extends TestCase
             ['NOT IN', ['foo', 'bar'], 'foo'],
             ['CONTAINS', 'foo', 'barbaz'],
             ['NOT CONTAINS', 'foo', 'foobar'],
+            ['LIKE', 'foo', 'barbaz'],
+            ['NOT LIKE', 'foo', 'Foobar'],
             ['===', 42, 43],
         ];
     }
