@@ -24,7 +24,8 @@ final class ContainsStringTest extends TestCase
         $this->assertFalse($validator->isValid('foobar'));
     }
 
-    public function testIgnoreCase() {
+    public function testIgnoreCase()
+    {
         $validator = new ContainsString(['needle' => 'foo', 'ignoreCase' => true]);
         $this->assertTrue($validator->isValid('Foobar'));
         $this->assertTrue($validator->isValid('foobar'));
