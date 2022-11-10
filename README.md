@@ -270,7 +270,7 @@ None.
 <?php
 
 $origin = new \Alley\Validator\OneOf(['haystack' => ['foo', 'bar']]);
-$valid = new Alley\Validator\Not($origin, 'The input was invalid.');
+$valid = new \Alley\Validator\Not($origin, 'The input was invalid.');
 
 $valid->isValid('foo'); // false
 $valid->isValid('baz'); // true
@@ -336,7 +336,7 @@ None.
 <?php
 
 $origin = new \Laminas\Validator\GreaterThan(42);
-$valid = new Alley\Validator\WithMessage('tooSmall', 'Please enter a number greater than 42.', $origin);
+$valid = new \Alley\Validator\WithMessage('tooSmall', 'Please enter a number greater than 42.', $origin);
 
 $valid->isValid(41); // false
 $valid->getMessages(); // ['tooSmall' => 'Please enter a number greater than 42.']
