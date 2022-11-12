@@ -112,7 +112,8 @@ final class Comparison extends BaseValidator
         $valid = $this->operatorOptionValidator->isValid($operator);
 
         if (! $valid) {
-            throw new InvalidArgumentException($this->operatorOptionValidator->getMessages()[0]);
+            $messages = $this->operatorOptionValidator->getMessages();
+            throw new InvalidArgumentException("Invalid 'operator': " . current($messages));
         }
 
         $this->options['operator'] = $operator;
