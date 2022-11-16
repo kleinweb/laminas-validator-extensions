@@ -17,29 +17,29 @@ use Laminas\Validator\GreaterThan;
 use Laminas\Validator\LessThan;
 use PHPUnit\Framework\TestCase;
 
-final class FastValidatorChainTest extends TestCase
+final class FastFailValidatorChainTest extends TestCase
 {
     public function testNoValidators()
     {
-        $validator = new FastValidatorChain([]);
+        $validator = new FastFailValidatorChain([]);
         $this->assertTrue($validator->isValid(42));
     }
 
     public function testValidValidator()
     {
-        $validator = new FastValidatorChain([new AlwaysValid(), new LessThan(['max' => 43])]);
+        $validator = new FastFailValidatorChain([new AlwaysValid(), new LessThan([ 'max' => 43])]);
         $this->assertTrue($validator->isValid(42));
     }
 
     public function testInvalidValidator()
     {
-        $validator = new FastValidatorChain([new AlwaysValid(), new GreaterThan(['min' => 43])]);
+        $validator = new FastFailValidatorChain([new AlwaysValid(), new GreaterThan([ 'min' => 43])]);
         $this->assertFalse($validator->isValid(42));
     }
 
     public function testBreakChainOnFirstFailure()
     {
-        $validator = new FastValidatorChain([
+        $validator = new FastFailValidatorChain([
             new LessThan(['max' => 10]),
             new GreaterThan(['min' => 43]),
         ]);
