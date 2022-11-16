@@ -104,6 +104,53 @@ $valid->isValid(42); // false
 count($valid->getMessages()); // 1
 ```
 
+## Validators by operator name
+
+`\Alley\Validator\ValidatorByOperator` allows you to access a validator using a readable operator name, such as `REGEX` or `NOT IN`.
+
+Its primary use case is to allow you to write functions that accept the readable operator names as parameters while using validators internally. Here's a demonstrative function call from [the wp-match-blocks library](https://github.com/alleyinteractive/wp-match-blocks):
+
+```php
+<?php
+
+$images = \Alley\WP\match_blocks(
+    $post,
+    [
+        'name' => 'core/image',
+        'attrs' => [
+            [
+                'key' => 'credit',
+                'value' => '/(The )?Associated Press/i',
+                'operator' => 'REGEX',
+            ],
+        ],
+    ],
+);
+```
+
+The supported operator names are:
+
+* `CONTAINS` and `NOT CONTAINS`, which forward to `\Alley\Validator\ContainsString` using a case-sensitive search.
+* `IN` and `NOT IN`, which forward to `\Alley\Validator\OneOf`.
+* `LIKE` and `NOT LIKE`, which forward to `\Alley\Validator\ContainsString` using a case-insensitive search.
+* `REGEX` and `NOT REGEX`, which forward to `\Laminas\Validator\Regex`.
+* `===`, `!==`, and the other operators supported by `\Alley\Validator\Comparison`.
+
+Any operator name that isn't forwarded to a different validator must be a valid `Comparison` operator.
+
+### Basic usage
+
+```php
+$valid = new \Alley\Validator\ValidatorByOperator('REGEX', '/^foo/');
+$valid->isValid('foobar'); // true
+
+$valid = new \Alley\Validator\ValidatorByOperator('NOT IN', ['bar', 'baz']);
+$valid->isValid('bar'); // false
+
+$valid = new \Alley\Validator\ValidatorByOperator('!==', 42);
+$valid->isValid(43); // true
+```
+
 ## Validators
 
 ### `AlwaysValid`
@@ -158,6 +205,32 @@ $valid = new \Alley\Validator\Comparison(
 $valid->isValid(true); // true
 ```
 
+### `ContainsString`
+
+`\Alley\Validator\ContainsString` is a validator around the `str_contains()` function. Each instance of the validator represents the "needle" string and validates whether the string is found within the input "haystack."  Inputs will automatically be cast to strings.
+
+#### Supported options
+
+The following options are supported for `\Alley\Validator\ContainsString`:
+
+- `needle`: The string or instance of `\Stringable` the inputs are searched for. It will automatically be cast to a string at the time of validation.
+- `ignoreCase`: Whether to perform a case-insensitive search. False by default.
+
+#### Basic usage
+
+```php
+<?php
+
+$valid = new \Alley\Validator\ContainsString(
+    [
+        'needle' => 'foo',
+    ],
+);
+
+$valid->isValid('foobar'); // true
+$valid->isValid('barbaz'); // false
+```
+
 ### `DivisibleBy`
 
 `\Alley\Validator\DivisibleBy` allows you to validate whether the input is evenly divisible by a given numeric value. Inputs will automatically be cast to integers.
@@ -197,7 +270,7 @@ None.
 <?php
 
 $origin = new \Alley\Validator\OneOf(['haystack' => ['foo', 'bar']]);
-$valid = new Alley\Validator\Not($origin, 'The input was invalid.');
+$valid = new \Alley\Validator\Not($origin, 'The input was invalid.');
 
 $valid->isValid('foo'); // false
 $valid->isValid('baz'); // true
@@ -247,6 +320,26 @@ $valid->isValid('date_create_immutable'); // true
 
 $valid = new \Alley\Validator\Type(['type' => 'bool']);
 $valid->isValid([]); // false
+```
+
+### `WithMessage`
+
+`Alley\Validator\WithMessage` allows you to decorate a validator with a custom failure code and message, replacing the validator's usual failure messages.
+
+#### Supported options
+
+None.
+
+#### Basic usage
+
+```php
+<?php
+
+$origin = new \Laminas\Validator\GreaterThan(42);
+$valid = new \Alley\Validator\WithMessage('tooSmall', 'Please enter a number greater than 42.', $origin);
+
+$valid->isValid(41); // false
+$valid->getMessages(); // ['tooSmall' => 'Please enter a number greater than 42.']
 ```
 
 ## About
