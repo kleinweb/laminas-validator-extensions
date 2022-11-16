@@ -4,7 +4,19 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ## Unreleased
 
-Nothing yet.
+### Added
+
+- `ContainsString`, `DivisibleBy`, `FastFailValidatorChain`, `ValidatorByOperator`, and `WithMessage` validators.
+
+### Changed
+
+- The failure message returned by `Not::getMessages()` now has the identifier `notValid`.
+
+### Fixed
+
+- `Not::getMessages()` returned failure messages before first call to `::isValid()`.
+- `Not::getMessages()` returned an indexed array of messages.
+- `Comparison` and `Type` referenced incorrect failure message keys when validating options.
 
 ## 1.1.0
 
