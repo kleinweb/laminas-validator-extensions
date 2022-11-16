@@ -88,16 +88,16 @@ $valid->isValid(99); // true
 $valid->isValid(42); // false
 ```
 
-## "Fast" validator chains
+## "Fast fail" validator chains
 
-`\Alley\Validator\FastValidatorChain` is like a [Laminas validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that if a validator fails, the chain will automatically be broken; there is no `$breakChainOnFailure` parameter.
+`\Alley\Validator\FastFailValidatorChain` is like a [Laminas validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that if a validator fails, the chain will automatically be broken; there is no `$breakChainOnFailure` parameter.
 
 Unlike a Laminas validator chain, validators can only be attached, not prepended, and there is no `$priority` argument.
 
 ### Basic usage
 
 ```php
-$valid = new \Alley\Validator\FastValidatorChain([new \Laminas\Validator\LessThan(['max' => 10])]);
+$valid = new \Alley\Validator\FastFailValidatorChain([new \Laminas\Validator\LessThan(['max' => 10])]);
 $valid->attach(new \Laminas\Validator\GreaterThan(['min' => 90]));
 
 $valid->isValid(42); // false
