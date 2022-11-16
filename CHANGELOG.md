@@ -6,7 +6,7 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ### Added
 
-- `ContainsString`, `DivisibleBy`, `FastValidatorChain`, and `WithMessage` validators.
+- `ContainsString`, `DivisibleBy`, `FastFailValidatorChain`, and `WithMessage` validators.
 
 ### Fixed
 
