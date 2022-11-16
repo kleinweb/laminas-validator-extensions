@@ -25,4 +25,10 @@ final class NotTest extends TestCase
         $this->assertNotSame($actual->isValid($value), $origin->isValid($value));
         $this->assertCount(1, $actual->getMessages());
     }
+
+    public function testNoMessagesBeforeValidation()
+    {
+        $validator = new Not(new AlwaysValid(), 'foo');
+        $this->assertCount(0, $validator->getMessages());
+    }
 }

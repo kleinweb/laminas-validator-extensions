@@ -15,34 +15,32 @@ namespace Alley\Validator;
 
 use Laminas\Validator\ValidatorInterface;
 
-final class Not implements ValidatorInterface
+final class WithMessage implements ValidatorInterface
 {
-    public const NOT_VALID = 'notValid';
-
-    private ValidatorInterface $origin;
+    private string $code;
 
     private string $message;
 
-    private bool $ran = false;
+    private ValidatorInterface $origin;
 
-    public function __construct(ValidatorInterface $origin, string $message)
+    public function __construct(string $code, string $message, ValidatorInterface $origin)
     {
         $this->origin = $origin;
+        $this->code = $code;
         $this->message = $message;
     }
 
     public function isValid($value)
     {
-        $this->ran = true;
-        return !$this->origin->isValid($value);
+        return $this->origin->isValid($value);
     }
 
     public function getMessages()
     {
         $messages = [];
 
-        if ($this->ran && \count($this->origin->getMessages()) === 0) {
-            $messages[self::NOT_VALID] = $this->message;
+        if (\count($this->origin->getMessages()) > 0) {
+            $messages[$this->code] = $this->message;
         }
 
         return $messages;
