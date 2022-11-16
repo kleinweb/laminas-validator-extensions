@@ -16,7 +16,7 @@ namespace Alley\Validator;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
 
-final class FastValidatorChain implements ValidatorInterface
+final class FastFailValidatorChain implements ValidatorInterface
 {
     private ValidatorChain $origin;
 
