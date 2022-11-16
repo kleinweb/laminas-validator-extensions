@@ -116,7 +116,8 @@ final class Type extends BaseValidator
         $valid = $this->typeOptionValidator->isValid($type);
 
         if (! $valid) {
-            throw new InvalidArgumentException($this->typeOptionValidator->getMessages()[0]);
+            $messages = $this->typeOptionValidator->getMessages();
+            throw new InvalidArgumentException("Invalid 'type': " . current($messages));
         }
 
         $this->options['type'] = $type;
