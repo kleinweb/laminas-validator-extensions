@@ -17,6 +17,8 @@ use Laminas\Validator\ValidatorInterface;
 
 final class Not implements ValidatorInterface
 {
+    public const NOT_VALID = 'notValid';
+
     private ValidatorInterface $origin;
 
     private string $message;
@@ -40,7 +42,7 @@ final class Not implements ValidatorInterface
         $messages = [];
 
         if ($this->ran && \count($this->origin->getMessages()) === 0) {
-            $messages[] = $this->message;
+            $messages[self::NOT_VALID] = $this->message;
         }
 
         return $messages;
