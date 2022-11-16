@@ -155,4 +155,13 @@ final class TypeTest extends TestCase
             ],
         ];
     }
+
+    public function testInvalidType()
+    {
+        $type = 'foo';
+
+        $this->expectExceptionMessageMatches("/^Invalid 'type': .+? but is {$type}\.$/");
+
+        new Type([ 'type' => $type ]);
+    }
 }
