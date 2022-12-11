@@ -14,11 +14,13 @@ $ composer require alleyinteractive/laminas-validator-extensions
 
 For more information about what validators do, how to use them, and how to write your own, [visit the Laminas documentation](https://docs.laminas.dev/laminas-validator/).
 
-## Base validator
+## Base validators
 
-The abstract `Alley\Validator\BaseValidator` class standardizes the implementation of custom validators with `\Laminas\Validator\AbstractValidator`.
+### `ExtendedAbstractValidator`
 
-When extending `BaseValidator`, validation logic goes into a new `testValue()` method, which is responsible only for applying the logic and adding any validation errors. It's no longer necessary to call `setValue()` prior to evaluating the input, and `isValid()` will return `true` if there are no error messages after evaluating the input and `false` if there are any messages.
+The abstract `Alley\Validator\ExtendedAbstractValidator` class standardizes the implementation of custom validators with `\Laminas\Validator\AbstractValidator`.
+
+When extending `ExtendedAbstractValidator`, validation logic goes into a new `testValue()` method, which is responsible only for applying the logic and adding any validation errors. It's no longer necessary to call `setValue()` prior to evaluating the input, and `isValid()` will return `true` if there are no error messages after evaluating the input and `false` if there are any messages.
 
 Before:
 
@@ -52,7 +54,7 @@ After:
 ```php
 <?php
 
-class Float extends \Alley\Validator\BaseValidator
+class Float extends \Alley\Validator\ExtendedAbstractValidator
 {
     const FLOAT = 'float';
 

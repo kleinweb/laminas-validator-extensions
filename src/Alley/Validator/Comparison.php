@@ -16,7 +16,7 @@ namespace Alley\Validator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\ValidatorInterface;
 
-final class Comparison extends BaseValidator
+final class Comparison extends ExtendedAbstractValidator
 {
     private const SUPPORTED_OPERATORS = [
         '==',

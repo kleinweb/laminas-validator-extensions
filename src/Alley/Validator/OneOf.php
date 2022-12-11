@@ -18,7 +18,7 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Explode;
 use Laminas\Validator\ValidatorInterface;
 
-final class OneOf extends BaseValidator
+final class OneOf extends ExtendedAbstractValidator
 {
     public const NOT_ONE_OF = 'notOneOf';
 
