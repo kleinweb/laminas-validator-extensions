@@ -71,6 +71,28 @@ class Float extends \Alley\Validator\ExtendedAbstractValidator
 }
 ```
 
+### `FreeformValidator`
+
+The standalone, abstract `Alley\Validator\FreeformValidator` class leaves most of the implementation details to your discretion, but it's often easier to use for validators that are project-specific or not ready for wider distribution.
+
+Like the `ExtendedAbstractValidator` class, the `FreeformValidator` expects that validation logic goes into a `testValue()` method, and `isValid()` will return `true` or `false` based on whether there are error messages.
+
+Validation errors can be added using the `error()` method, which accepts the message key and text.
+
+```php
+<?php
+
+class Float extends \Alley\Validator\FreeformValidator
+{
+    public function testValue($value): void
+    {
+        if (! is_float($value)) {
+            $this->error('float', 'Please enter a floating point value');
+        }
+    }
+}
+```
+
 ## "Any Validator" chains
 
 `\Alley\Validator\AnyValidator` is like a [Laminas validator chain](https://docs.laminas.dev/laminas-validator/validator-chains/) except that it connects the validators with "OR," marking input as valid as soon it passes one of the given validators.
