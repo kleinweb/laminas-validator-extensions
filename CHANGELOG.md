@@ -4,6 +4,10 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ## Unreleased
 
+Nothing yet.
+
+## 2.0.0
+
 ### Added
 
 - `FreeformValidator` abstract class.
