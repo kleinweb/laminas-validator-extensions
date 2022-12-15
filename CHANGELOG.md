@@ -20,6 +20,10 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 - `Not::getMessages()` returned an indexed array of messages.
 - `Comparison` and `Type` referenced incorrect failure message keys when validating options.
 
+### Removed
+
+- PHP 7.4 support.
+
 ## 1.1.0
 
 ### Added
