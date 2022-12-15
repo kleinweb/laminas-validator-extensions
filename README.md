@@ -14,11 +14,13 @@ $ composer require alleyinteractive/laminas-validator-extensions
 
 For more information about what validators do, how to use them, and how to write your own, [visit the Laminas documentation](https://docs.laminas.dev/laminas-validator/).
 
-## Base validator
+## Base validators
 
-The abstract `Alley\Validator\BaseValidator` class standardizes the implementation of custom validators with `\Laminas\Validator\AbstractValidator`.
+### `ExtendedAbstractValidator`
 
-When extending `BaseValidator`, validation logic goes into a new `testValue()` method, which is responsible only for applying the logic and adding any validation errors. It's no longer necessary to call `setValue()` prior to evaluating the input, and `isValid()` will return `true` if there are no error messages after evaluating the input and `false` if there are any messages.
+The abstract `Alley\Validator\ExtendedAbstractValidator` class standardizes the implementation of custom validators with `\Laminas\Validator\AbstractValidator`.
+
+When extending `ExtendedAbstractValidator`, validation logic goes into a new `testValue()` method, which is responsible only for applying the logic and adding any validation errors. It's no longer necessary to call `setValue()` prior to evaluating the input, and `isValid()` will return `true` if there are no error messages after evaluating the input and `false` if there are any messages.
 
 Before:
 
@@ -52,7 +54,7 @@ After:
 ```php
 <?php
 
-class Float extends \Alley\Validator\BaseValidator
+class Float extends \Alley\Validator\ExtendedAbstractValidator
 {
     const FLOAT = 'float';
 
@@ -64,6 +66,28 @@ class Float extends \Alley\Validator\BaseValidator
     {
         if (! is_float($value)) {
             $this->error(self::FLOAT);
+        }
+    }
+}
+```
+
+### `FreeformValidator`
+
+The standalone, abstract `Alley\Validator\FreeformValidator` class leaves most of the implementation details to your discretion, but it's often easier to use for validators that are project-specific or not ready for wider distribution.
+
+Like the `ExtendedAbstractValidator` class, the `FreeformValidator` expects that validation logic goes into a `testValue()` method, and `isValid()` will return `true` or `false` based on whether there are error messages.
+
+Validation errors can be added using the `error()` method, which accepts the message key and text.
+
+```php
+<?php
+
+class Float extends \Alley\Validator\FreeformValidator
+{
+    public function testValue($value): void
+    {
+        if (! is_float($value)) {
+            $this->error('float', 'Please enter a floating point value');
         }
     }
 }

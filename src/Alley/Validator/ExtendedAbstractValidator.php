@@ -15,7 +15,7 @@ namespace Alley\Validator;
 
 use Laminas\Validator\AbstractValidator;
 
-abstract class BaseValidator extends AbstractValidator
+abstract class ExtendedAbstractValidator extends AbstractValidator
 {
     final public function isValid($value): bool
     {

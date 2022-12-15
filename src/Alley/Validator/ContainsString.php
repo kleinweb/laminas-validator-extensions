@@ -17,7 +17,7 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\ValidatorInterface;
 
-final class ContainsString extends BaseValidator
+final class ContainsString extends ExtendedAbstractValidator
 {
     public const NOT_CONTAINS_STRING = 'notContainsString';
 

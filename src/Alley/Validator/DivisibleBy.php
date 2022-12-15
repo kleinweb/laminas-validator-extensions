@@ -16,7 +16,7 @@ namespace Alley\Validator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\ValidatorInterface;
 
-final class DivisibleBy extends BaseValidator
+final class DivisibleBy extends ExtendedAbstractValidator
 {
     public const NOT_DIVISIBLE_BY = 'notDivisibleBy';
 

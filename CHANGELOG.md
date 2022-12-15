@@ -6,10 +6,12 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ### Added
 
+- `FreeformValidator` abstract class.
 - `ContainsString`, `DivisibleBy`, `FastFailValidatorChain`, `ValidatorByOperator`, and `WithMessage` validators.
 
 ### Changed
 
+- `BaseValidator` was renamed `ExtendedAbstractValidator` to emphasize its connection to the Laminas `AbstractValidator` now that this library has multiple base validators.
 - The failure message returned by `Not::getMessages()` now has the identifier `notValid`.
 
 ### Fixed

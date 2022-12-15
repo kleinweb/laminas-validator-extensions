@@ -16,7 +16,7 @@ namespace Alley\Validator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\ValidatorInterface;
 
-final class Type extends BaseValidator
+final class Type extends ExtendedAbstractValidator
 {
     public const NOT_OF_TYPE = 'notOfType';
 
