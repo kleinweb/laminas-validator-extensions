@@ -4,6 +4,10 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 ## Unreleased
 
+Nothing yet.
+
+## 2.0.0
+
 ### Added
 
 - `FreeformValidator` abstract class.
@@ -19,6 +23,10 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 - `Not::getMessages()` returned failure messages before first call to `::isValid()`.
 - `Not::getMessages()` returned an indexed array of messages.
 - `Comparison` and `Type` referenced incorrect failure message keys when validating options.
+
+### Removed
+
+- PHP 7.4 support.
 
 ## 1.1.0
 
