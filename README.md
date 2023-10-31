@@ -317,7 +317,7 @@ The following options are supported for `\Alley\Validator\OneOf`:
 ```php
 <?php
 
-$valid = \Alley\Validator\OneOf::create(['one', 'two', 'three']);
+$valid = new \Alley\Validator\OneOf(['haystack' => ['one', 'two', 'three']]);
 $valid->isValid('four'); // false
 $valid->getMessages(); // ['notOneOf' => 'Must be one of [one, two, three] but is four.']
 ```
