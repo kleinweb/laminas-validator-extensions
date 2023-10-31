@@ -160,7 +160,7 @@ final class TypeTest extends TestCase
     {
         $type = 'foo';
 
-        $this->expectExceptionMessageMatches("/^Invalid 'type': .+? but is {$type}\.$/");
+        $this->expectExceptionMessageMatches("/^Invalid 'type': {$type}\.$/");
 
         new Type([ 'type' => $type ]);
     }

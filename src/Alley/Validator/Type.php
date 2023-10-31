@@ -51,15 +51,6 @@ final class Type extends ExtendedAbstractValidator
         'type' => 'null',
     ];
 
-    private ValidatorInterface $typeOptionValidator;
-
-    public function __construct($options = null)
-    {
-        $this->typeOptionValidator = new OneOf(['haystack' => self::SUPPORTED_TYPES]);
-
-        parent::__construct($options);
-    }
-
     protected function testValue($value): void
     {
         switch ($this->options['type']) {
@@ -113,11 +104,8 @@ final class Type extends ExtendedAbstractValidator
 
     protected function setType(string $type)
     {
-        $valid = $this->typeOptionValidator->isValid($type);
-
-        if (! $valid) {
-            $messages = $this->typeOptionValidator->getMessages();
-            throw new InvalidArgumentException("Invalid 'type': " . current($messages));
+        if (!\in_array($type, self::SUPPORTED_TYPES, true)) {
+            throw new InvalidArgumentException("Invalid 'type': {$type}.");
         }
 
         $this->options['type'] = $type;

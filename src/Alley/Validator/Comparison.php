@@ -62,15 +62,6 @@ final class Comparison extends ExtendedAbstractValidator
         'operator' => '===',
     ];
 
-    private ValidatorInterface $operatorOptionValidator;
-
-    public function __construct($options = null)
-    {
-        $this->operatorOptionValidator = new OneOf(['haystack' => self::SUPPORTED_OPERATORS]);
-
-        parent::__construct($options);
-    }
-
     protected function testValue($value): void
     {
         switch ($this->options['operator']) {
@@ -102,18 +93,15 @@ final class Comparison extends ExtendedAbstractValidator
                 break;
         }
 
-        if (! $result) {
+        if (!$result) {
             $this->error(self::OPERATOR_ERROR_CODES[$this->options['operator']]);
         }
     }
 
     protected function setOperator(string $operator)
     {
-        $valid = $this->operatorOptionValidator->isValid($operator);
-
-        if (! $valid) {
-            $messages = $this->operatorOptionValidator->getMessages();
-            throw new InvalidArgumentException("Invalid 'operator': " . current($messages));
+        if (!\in_array($operator, self::SUPPORTED_OPERATORS, true)) {
+            throw new InvalidArgumentException("Invalid 'operator': {$operator}.");
         }
 
         $this->options['operator'] = $operator;
