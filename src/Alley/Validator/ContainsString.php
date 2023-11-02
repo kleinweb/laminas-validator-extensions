@@ -34,23 +34,6 @@ final class ContainsString extends ExtendedAbstractValidator
         'ignoreCase' => false,
     ];
 
-    private ValidatorInterface $validNeedles;
-
-    public function __construct($options)
-    {
-        $this->validNeedles = new WithMessage(
-            'noMatchingTypes',
-            'Must be string or instance of \Stringable',
-            new AnyValidator([
-                new Type([ 'type' => 'string' ]),
-                new IsInstanceOf(\Stringable::class),
-                new Type([ 'type' => 'null' ]),
-            ]),
-        );
-
-        parent::__construct($options);
-    }
-
     protected function testValue($value): void
     {
         $haystack = (string) $value;
@@ -61,18 +44,15 @@ final class ContainsString extends ExtendedAbstractValidator
             $needle = strtolower($needle);
         }
 
-        if (! str_contains($haystack, $needle)) {
+        if (!str_contains($haystack, $needle)) {
             $this->error(self::NOT_CONTAINS_STRING);
         }
     }
 
     protected function setNeedle($needle)
     {
-        $valid = $this->validNeedles->isValid($needle);
-
-        if (! $valid) {
-            $messages = $this->validNeedles->getMessages();
-            throw new InvalidArgumentException("Invalid 'needle': " . current($messages));
+        if (!\is_string($needle) && !\is_null($needle) && !$needle instanceof \Stringable) {
+            throw new InvalidArgumentException("Invalid 'needle': Must be string or instance of \Stringable");
         }
 
         $this->options['needle'] = $needle;

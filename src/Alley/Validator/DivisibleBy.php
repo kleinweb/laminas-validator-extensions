@@ -32,29 +32,12 @@ final class DivisibleBy extends ExtendedAbstractValidator
         'divisor' => 1,
     ];
 
-    private ValidatorInterface $validDivisors;
-
-    private ValidatorInterface $validRemainders;
-
-    public function __construct($options)
-    {
-        $this->validDivisors = new Comparison([
-            'compared' => 0,
-            'operator' => '!==',
-        ]);
-        $this->validRemainders = new Comparison(
-            [
-                'compared' => 0,
-                'operator' => '===',
-            ],
-        );
-
-        parent::__construct($options);
-    }
-
     protected function testValue($value): void
     {
-        if (! $this->validRemainders->isValid((int) $value % $this->options['divisor'])) {
+        $value = (int) $value;
+        $actual = $value % $this->options['divisor'];
+
+        if ($actual !== 0) {
             $this->error(self::NOT_DIVISIBLE_BY);
         }
     }
@@ -62,11 +45,9 @@ final class DivisibleBy extends ExtendedAbstractValidator
     protected function setDivisor($divisor)
     {
         $divisor = (int) $divisor;
-        $valid = $this->validDivisors->isValid($divisor);
 
-        if (! $valid) {
-            $messages = $this->validDivisors->getMessages();
-            throw new InvalidArgumentException("Invalid 'divisor': " . current($messages));
+        if ($divisor === 0) {
+            throw new InvalidArgumentException("Invalid 'divisor': {$divisor}");
         }
 
         $this->options['divisor'] = $divisor;

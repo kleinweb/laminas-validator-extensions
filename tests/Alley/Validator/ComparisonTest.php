@@ -172,7 +172,7 @@ final class ComparisonTest extends TestCase
     {
         $operator = 'foo';
 
-        $this->expectExceptionMessageMatches("/^Invalid 'operator': .+? but is {$operator}\.$/");
+        $this->expectExceptionMessageMatches("/^Invalid 'operator': {$operator}\.$/");
 
         new Comparison([ 'operator' => $operator ]);
     }
