@@ -40,4 +40,14 @@ final class ContainsStringTest extends TestCase
             $validator->getMessages(),
         );
     }
+
+    public function testNonScalar()
+    {
+        $validator = new ContainsString(['needle' => 'baz']);
+        $this->assertFalse($validator->isValid([]));
+        $this->assertSame(
+            ['notContainsString' => 'Must contain string "baz".'],
+            $validator->getMessages(),
+        );
+    }
 }

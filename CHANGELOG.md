@@ -6,6 +6,12 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 Nothing yet.
 
+## 2.1.1
+
+### Fixed
+
+- Array-to-string conversion in `ContainsString`.
+
 ## 2.1.0
 
 ### Changed
