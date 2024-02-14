@@ -36,7 +36,7 @@ final class ContainsString extends ExtendedAbstractValidator
 
     protected function testValue($value): void
     {
-        if (is_scalar($value)) {
+        if (\is_scalar($value)) {
             $haystack = (string) $value;
             $needle = (string) $this->options['needle'];
 
