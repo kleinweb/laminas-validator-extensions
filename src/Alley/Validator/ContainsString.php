@@ -36,17 +36,21 @@ final class ContainsString extends ExtendedAbstractValidator
 
     protected function testValue($value): void
     {
-        $haystack = (string) $value;
-        $needle = (string) $this->options['needle'];
+        if (\is_scalar($value)) {
+            $haystack = (string) $value;
+            $needle = (string) $this->options['needle'];
 
-        if ($this->options['ignoreCase']) {
-            $haystack = strtolower($haystack);
-            $needle = strtolower($needle);
+            if ($this->options['ignoreCase']) {
+                $haystack = strtolower($haystack);
+                $needle = strtolower($needle);
+            }
+
+            if (str_contains($haystack, $needle)) {
+                return;
+            }
         }
 
-        if (!str_contains($haystack, $needle)) {
-            $this->error(self::NOT_CONTAINS_STRING);
-        }
+        $this->error(self::NOT_CONTAINS_STRING);
     }
 
     protected function setNeedle($needle)
